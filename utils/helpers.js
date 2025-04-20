@@ -12,8 +12,7 @@ const extractVideoId = (url) => {
 	return m[1];
 };
 
-const fetchOriginalSnippet = async (oauth2Client, url) => {
-	const videoId = extractVideoId(url);
+const fetchOriginalSnippet = async (oauth2Client, videoId) => {
 	const youtube = google.youtube({ version: "v3", auth: oauth2Client });
 	const res = await youtube.videos.list({
 		part: ["snippet"],
@@ -26,11 +25,8 @@ const fetchOriginalSnippet = async (oauth2Client, url) => {
 	return { title, description };
 };
 
-const fetchAutoTranscript = async (url) => {
+const fetchAutoTranscript = async (videoId) => {
 	try {
-		// extract the video ID from the URL
-		const videoId = extractVideoId(url);
-
 		// this will give you an array of { text, duration, offset }
 		const lines = await YoutubeTranscript.fetchTranscript(videoId);
 

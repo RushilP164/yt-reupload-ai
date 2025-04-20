@@ -24,7 +24,8 @@ Output *only* a JSON object EXACTLY matching this schema:
 - Description's hash tags should be started with #staytunedwithrd
 - All hash tags used in title & description in hash_tags array.
 
-- Your response MUST start with "{" and end with "}", with no extra text. MUST BE a VALID JSON OBJECT.
+- Your response MUST start with "{" and end with "}", with no extra text.
+- Your response MUST BE a VALID JSON OBJECT IN A GIVEN FORMAT WHICH CAN BE PARSED in JS.
 
 Transcript:
 """${transcript.text}"""
