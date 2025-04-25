@@ -23,8 +23,8 @@ const processShort = async (videoId) => {
 	const meta = await generateMetaGemini(transcipt, title, description);
 
 	// STEP 3
-	// console.log("3️⃣  Uploading to YouTube...");
-	// await uploadToYouTube(oauth2, videoLocation, meta);
+	console.log("3️⃣  Uploading to YouTube...");
+	await uploadToYouTube(oauth2, videoLocation, meta);
 
 	console.log("🎉 Done!");
 };

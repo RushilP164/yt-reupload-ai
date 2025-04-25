@@ -9,23 +9,29 @@ const generateMetaGemini = async (transcript, originalTitle, originalDesc) => {
 You are a YouTube Shorts & Video SEO expert. Your task is to generate the youtube's improved title & description for given details along with proper hashtags.
 You are given video transcript, original title & original description.
 ${transciptDetails}
-Output *only* a JSON object EXACTLY matching this schema:
+Output *only* a raw JSON object EXACTLY matching this schema & without any additional text:
 
 {
   "new_title": "<punchy title, max 100 chars, with original & new hashtags>",
   "new_description": "<full description, max 1000 chars, with original & new hashtags>",
-  "hash_tags": <all hash_tags which are used in new_title & new_description>
+  "hash_tags": "<all hash_tags which are used in new_title & new_description>"
 }
 
+Instructions:
 - Use the Original Title & Description to pull any character names or context that the transcript alone might miss.
 - Fuse that with the transcript to craft an engaging new title & description.
-- 3-7 total hashtags in title.
-- All required hashtags in description. 2 lines of space between text & hashtags.
+- Title should be max 100 characters. 3-7 total hashtags in Title.
+- Use all the required hashtags in description. 2 lines of space between text & hashtags.
 - Description's hash tags should be started with #staytunedwithrd
-- All hash tags used in title & description in hash_tags array.
+- Keep in mind that, we are re-uploading someone's video. So description should be like we are promoting original video.
+- Do not keep any links in description.
+- All hash tags used in title & description should be listed in hash_tags array.
 
-- Your response MUST start with "{" and end with "}", with no extra text.
-- Your response MUST BE a VALID JSON OBJECT IN A GIVEN FORMAT WHICH CAN BE PARSED in JS.
+
+- Output MUST BE a VALID RAW JSON OBJECT IN A GIVEN FORMAT WHICH CAN BE PARSED in JS.
+- Output only a raw JSON string — no markdown, no json fences, no extra text.
+- Do not include raw newlines or tabs — use \\\\n and \\\\t instead (escaped backslash).
+- Output must begin with { and end with }.
 
 Transcript:
 """${transcript.text}"""
@@ -91,7 +97,8 @@ Original Description: "${originalDesc}"
 	// Strip the ```json fences
 	const inside = raw
 		.replace(/^```json\s*/, "") // remove leading ```json
-		.replace(/\s*```$/, ""); // remove trailing ```
+		.replace(/\s*```$/, "") // remove trailing ```
+		.trim();
 
 	// Parse as JSON
 	let meta;
